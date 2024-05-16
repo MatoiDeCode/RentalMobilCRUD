@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Administrator
  */
 
-public class main extends javax.swing.JFrame {
+public final class main extends javax.swing.JFrame {
 
     /**
      * Creates new form java
@@ -26,9 +26,15 @@ public class main extends javax.swing.JFrame {
         int x = layar.width / 2 - this.getSize().width / 2;
         int y = layar.height / 2 - this.getSize().width / 2;
         this.setLocation(x, y);
+        
+        addTanggal();
     }
     
-    
+    public void addTanggal() {
+        Date tgl = new Date();
+        SimpleDateFormat aa = new SimpleDateFormat("dd-MM-yyyy");
+        tanggal.setText(aa.format(tgl));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
