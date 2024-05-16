@@ -141,6 +141,11 @@ public final class main extends javax.swing.JFrame {
                 tanggalActionPerformed(evt);
             }
         });
+        tanggal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tanggalKeyTyped(evt);
+            }
+        });
 
         noPolisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "B 1234 XYZ", "D 5678 ABC", "L 9012 DEF", "F 3456 GHI", "H 7890 JKL" }));
 
@@ -482,6 +487,13 @@ public final class main extends javax.swing.JFrame {
         // TODO add your handling code here:
         maxChar(evt);
     }//GEN-LAST:event_noTransaksiKeyTyped
+
+    private void tanggalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tanggalKeyTyped
+        // TODO add your handling code here:
+        if (tanggal.getText() != null) {
+            tanggal.setEditable(false);
+        }
+    }//GEN-LAST:event_tanggalKeyTyped
 
     /**
      * @param args the command line arguments

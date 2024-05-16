@@ -265,6 +265,7 @@
     <Component class="javax.swing.JTextField" name="tanggal">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tanggalActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tanggalKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="noPolisi">
