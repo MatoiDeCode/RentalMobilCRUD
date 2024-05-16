@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import java.util.HashMap;
 
 /**
  *
@@ -33,6 +32,7 @@ public final class main extends javax.swing.JFrame {
         addTanggal();
         
         jenisKendaraan.setEnabled(false);
+        hargaSupir.setEnabled(false);
         hargaSewa.setEnabled(false);
         totalBayar.setEnabled(false);
         kembalian.setEnabled(false);
@@ -269,6 +269,11 @@ public final class main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         pilihSupir.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supir", "No Supir" }));
+        pilihSupir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pilihSupirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -505,28 +510,37 @@ public final class main extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nomorPolisi = noPolisi.getSelectedItem().toString();
         switch (nomorPolisi) {
-            case "B 1234 XYZ":
+            case "B 1234 XYZ" -> {
                 jenisKendaraan.setText("BMW");
                 hargaSewa.setText("4000000");
-                break;
-            case "D 5678 ABC":
+            }
+            case "D 5678 ABC" -> {
                 jenisKendaraan.setText("Mercedes - Benz");
                 hargaSewa.setText("1500000");
-                break;
-            case "L 9012 DEF":
+            }
+            case "L 9012 DEF" -> {
                 jenisKendaraan.setText("Ford");
                 hargaSewa.setText("800000");
-                break;
-            case "F 3456 GHI":
+            }
+            case "F 3456 GHI" -> {
                 jenisKendaraan.setText("Honda");
                 hargaSewa.setText("600000");
-                break;
-            case "H 7890 JKL":
+            }
+            case "H 7890 JKL" -> {
                 jenisKendaraan.setText("Toyota");
                 hargaSewa.setText("500000");
-                break;
+            }
         }
     }//GEN-LAST:event_noPolisiActionPerformed
+
+    private void pilihSupirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihSupirActionPerformed
+        // TODO add your handling code here:
+        String supir = pilihSupir.getSelectedItem().toString();
+        switch (supir) {
+            case "Supir" -> hargaSupir.setText("150000");
+            case "No Supir" -> hargaSupir.setText("0");
+        }
+    }//GEN-LAST:event_pilihSupirActionPerformed
 
     /**
      * @param args the command line arguments
