@@ -4,10 +4,16 @@
  */
 package main;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Administrator
  */
+
 public class main extends javax.swing.JFrame {
 
     /**
@@ -15,6 +21,11 @@ public class main extends javax.swing.JFrame {
      */
     public main() {
         initComponents();
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = layar.width / 2 - this.getSize().width / 2;
+        int y = layar.height / 2 - this.getSize().width / 2;
+        this.setLocation(x, y);
     }
 
     /**
