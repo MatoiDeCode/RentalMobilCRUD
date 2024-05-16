@@ -30,6 +30,11 @@ public final class main extends javax.swing.JFrame {
         this.setLocation(x, y);
         
         addTanggal();
+        
+        jenisKendaraan.setEnabled(false);
+        hargaSewa.setEnabled(false);
+        totalBayar.setEnabled(false);
+        kembalian.setEnabled(false);
     }
     
     public void addTanggal() {
