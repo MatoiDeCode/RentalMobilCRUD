@@ -469,6 +469,13 @@ public final class main extends javax.swing.JFrame {
 
     private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
         // TODO add your handling code here:
+        int hargaSewaMobil = Integer.parseInt(hargaSewa.getText());
+        int lamaSewaMobil = Integer.parseInt(lamaSewa.getText());
+        int biayaSupirMobil = Integer.parseInt(hargaSupir.getText());
+        int totalBayarMobil;
+        
+        totalBayarMobil = ((hargaSewaMobil * lamaSewaMobil) + biayaSupirMobil);
+        totalBayar.setText(Integer.toString(totalBayarMobil));
     }//GEN-LAST:event_btnHitungActionPerformed
 
     private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
