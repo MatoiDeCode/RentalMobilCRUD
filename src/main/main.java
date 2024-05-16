@@ -6,6 +6,7 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -35,6 +36,15 @@ public final class main extends javax.swing.JFrame {
         Date tgl = new Date();
         SimpleDateFormat aa = new SimpleDateFormat("dd-MM-yyyy");
         tanggal.setText(aa.format(tgl));
+    }
+    
+    public void maxChar(KeyEvent a) {
+        if (noTransaksi.getText().length() == 6) {
+            a.consume();
+            JOptionPane.showMessageDialog(null,
+                "Maksimal 6 Karakter",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     /**
@@ -111,6 +121,11 @@ public final class main extends javax.swing.JFrame {
         noTransaksi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noTransaksiActionPerformed(evt);
+            }
+        });
+        noTransaksi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                noTransaksiKeyTyped(evt);
             }
         });
 
@@ -458,6 +473,11 @@ public final class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void noTransaksiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noTransaksiKeyTyped
+        // TODO add your handling code here:
+        maxChar(evt);
+    }//GEN-LAST:event_noTransaksiKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -474,15 +494,12 @@ public final class main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 
