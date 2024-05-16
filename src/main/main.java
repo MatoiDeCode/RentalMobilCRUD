@@ -199,6 +199,11 @@ public final class main extends javax.swing.JFrame {
 
         jLabel11.setText("Uang Bayar :");
 
+        uangBayar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                uangBayarFocusLost(evt);
+            }
+        });
         uangBayar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uangBayarActionPerformed(evt);
@@ -548,6 +553,22 @@ public final class main extends javax.swing.JFrame {
             case "No Supir" -> hargaSupir.setText("0");
         }
     }//GEN-LAST:event_pilihSupirActionPerformed
+
+    private void uangBayarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_uangBayarFocusLost
+        // TODO add your handling code here:
+        int cekTotal = Integer.parseInt(totalBayar.getText());
+        int cekBayar = Integer.parseInt(uangBayar.getText());
+        
+        if (cekBayar < cekTotal) {
+            JOptionPane.showMessageDialog(null,
+                "Uang Bayar Kurang Dari Total Bayar!",
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int hitungKembalian;
+            hitungKembalian = cekBayar - cekTotal;
+            kembalian.setText(Integer.toString(hitungKembalian));
+        }
+    }//GEN-LAST:event_uangBayarFocusLost
 
     /**
      * @param args the command line arguments
