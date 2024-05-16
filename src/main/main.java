@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -428,6 +429,13 @@ public final class main extends javax.swing.JFrame {
 
     private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
         // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(null,
+            "Apakah Yakin Akan Keluar ?",
+            "Konfirmasi",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
+        {
+            System.exit(0);
+        }
     }//GEN-LAST:event_btnKeluarActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
