@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import java.util.HashMap;
 
 /**
  *
@@ -51,7 +52,7 @@ public final class main extends javax.swing.JFrame {
                 "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,6 +149,11 @@ public final class main extends javax.swing.JFrame {
         });
 
         noPolisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "B 1234 XYZ", "D 5678 ABC", "L 9012 DEF", "F 3456 GHI", "H 7890 JKL" }));
+        noPolisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noPolisiActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Jenis Kendaraan :");
 
@@ -288,7 +294,7 @@ public final class main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jenisKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jenisKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -494,6 +500,33 @@ public final class main extends javax.swing.JFrame {
             tanggal.setEditable(false);
         }
     }//GEN-LAST:event_tanggalKeyTyped
+
+    private void noPolisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noPolisiActionPerformed
+        // TODO add your handling code here:
+        String nomorPolisi = noPolisi.getSelectedItem().toString();
+        switch (nomorPolisi) {
+            case "B 1234 XYZ":
+                jenisKendaraan.setText("BMW");
+                hargaSewa.setText("4000000");
+                break;
+            case "D 5678 ABC":
+                jenisKendaraan.setText("Mercedes - Benz");
+                hargaSewa.setText("1500000");
+                break;
+            case "L 9012 DEF":
+                jenisKendaraan.setText("Ford");
+                hargaSewa.setText("800000");
+                break;
+            case "F 3456 GHI":
+                jenisKendaraan.setText("Honda");
+                hargaSewa.setText("600000");
+                break;
+            case "H 7890 JKL":
+                jenisKendaraan.setText("Toyota");
+                hargaSewa.setText("500000");
+                break;
+        }
+    }//GEN-LAST:event_noPolisiActionPerformed
 
     /**
      * @param args the command line arguments
