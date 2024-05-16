@@ -421,6 +421,14 @@ public final class main extends javax.swing.JFrame {
 
     private void btnBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaruActionPerformed
         // TODO add your handling code here:
+        noTransaksi.setText("");
+        jenisKendaraan.setText("");
+        hargaSewa.setText("");
+        lamaSewa.setText("");
+        hargaSupir.setText("");
+        totalBayar.setText("");
+        uangBayar.setText("");
+        kembalian.setText("");
     }//GEN-LAST:event_btnBaruActionPerformed
 
     private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
