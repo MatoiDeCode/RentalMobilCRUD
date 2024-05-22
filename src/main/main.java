@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
  *
  * @author Administrator
  */
-
 public final class main extends javax.swing.JFrame {
 
     /**
@@ -23,36 +22,36 @@ public final class main extends javax.swing.JFrame {
      */
     public main() {
         initComponents();
-        
+
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
         int x = layar.width / 2 - this.getSize().width / 2;
         int y = layar.height / 2 - this.getSize().width / 2;
         this.setLocation(x, y);
-        
+
         addTanggal();
-        
+
         jenisKendaraan.setEnabled(false);
         hargaSupir.setEnabled(false);
         hargaSewa.setEnabled(false);
         totalBayar.setEnabled(false);
         kembalian.setEnabled(false);
     }
-    
+
     public void addTanggal() {
         Date tgl = new Date();
         SimpleDateFormat aa = new SimpleDateFormat("dd-MM-yyyy");
         tanggal.setText(aa.format(tgl));
     }
-    
+
     public void maxChar(KeyEvent a) {
         if (noTransaksi.getText().length() == 6) {
             a.consume();
             JOptionPane.showMessageDialog(null,
-                "Maksimal 6 Karakter",
-                "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    "Maksimal 6 Karakter",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -478,7 +477,7 @@ public final class main extends javax.swing.JFrame {
         int lamaSewaMobil = Integer.parseInt(lamaSewa.getText());
         int biayaSupirMobil = Integer.parseInt(hargaSupir.getText());
         int totalBayarMobil;
-        
+
         totalBayarMobil = ((hargaSewaMobil * lamaSewaMobil) + biayaSupirMobil);
         totalBayar.setText(Integer.toString(totalBayarMobil));
     }//GEN-LAST:event_btnHitungActionPerformed
@@ -486,10 +485,9 @@ public final class main extends javax.swing.JFrame {
     private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
         // TODO add your handling code here:
         if (JOptionPane.showConfirmDialog(null,
-            "Apakah Yakin Akan Keluar ?",
-            "Konfirmasi",
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
-        {
+                "Apakah Yakin Akan Keluar ?",
+                "Konfirmasi",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_btnKeluarActionPerformed
@@ -513,9 +511,7 @@ public final class main extends javax.swing.JFrame {
 
     private void tanggalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tanggalKeyTyped
         // TODO add your handling code here:
-        if (tanggal.getText() != null) {
-            tanggal.setEditable(false);
-        }
+        tanggal.setEditable(false);
     }//GEN-LAST:event_tanggalKeyTyped
 
     private void noPolisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noPolisiActionPerformed
@@ -549,26 +545,62 @@ public final class main extends javax.swing.JFrame {
         // TODO add your handling code here:
         String supir = pilihSupir.getSelectedItem().toString();
         switch (supir) {
-            case "Supir" -> hargaSupir.setText("150000");
-            case "No Supir" -> hargaSupir.setText("0");
+            case "Supir" ->
+                hargaSupir.setText("150000");
+            case "No Supir" ->
+                hargaSupir.setText("0");
         }
     }//GEN-LAST:event_pilihSupirActionPerformed
 
-    private void uangBayarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_uangBayarFocusLost
-        // TODO add your handling code here:
-        int cekTotal = Integer.parseInt(totalBayar.getText());
-        int cekBayar = Integer.parseInt(uangBayar.getText());
-        
+    private void uangBayarFocusLost(java.awt.event.FocusEvent evt) {
+        // Mendeklarasikan variabel yang akan digunakan
+        int cekTotal = 0;
+        int cekBayar = 0;
+        int hitungKembalian = 0;
+
+        // Mendapatkan nilai totalBayar langsung tanpa validasi
+        try {
+            cekTotal = Integer.parseInt(totalBayar.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Total Bayar Harus Berupa Angka",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE
+            );
+            return; // Menghentikan eksekusi jika bukan angka
+        }
+
+        // Validasi jika uangBayar kosong
+        if (uangBayar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Uang Bayar Tidak Boleh Kosong",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE
+            );
+            return; // Menghentikan eksekusi jika kosong
+        }
+
+        // Validasi jika uangBayar bukan angka
+        try {
+            cekBayar = Integer.parseInt(uangBayar.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Uang Bayar Harus Berupa Angka",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE
+            );
+            return; // Menghentikan eksekusi jika bukan angka
+        }
+
+        // Validasi jika uangBayar kurang dari totalBayar
         if (cekBayar < cekTotal) {
             JOptionPane.showMessageDialog(null,
-                "Uang Bayar Kurang Dari Total Bayar!",
-                "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    "Uang Bayar Kurang Dari Total Bayar!",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE
+            );
         } else {
-            int hitungKembalian;
+            // Menghitung kembalian jika semua validasi terpenuhi
             hitungKembalian = cekBayar - cekTotal;
             kembalian.setText(Integer.toString(hitungKembalian));
         }
-    }//GEN-LAST:event_uangBayarFocusLost
+    }
 
     /**
      * @param args the command line arguments
@@ -591,7 +623,7 @@ public final class main extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
 
