@@ -4,12 +4,19 @@
  */
 package main;
 
+import java.sql.Statement;
+import java.sql.DriverManager;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,8 +27,25 @@ public final class main extends javax.swing.JFrame {
     /**
      * Creates new form java
      */
+    private Connection cn;
+    private Statement st;
+    private ResultSet rs;
+    private DefaultTableModel tabModel;
+
     public main() {
         initComponents();
+
+        try {
+            cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rental_mobil", "root", "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        judul();
+        tampilData();
+
+        tabelRental = new javax.swing.JTable();
+        tabModel = new DefaultTableModel();
 
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
         int x = layar.width / 2 - this.getSize().width / 2;
@@ -35,6 +59,58 @@ public final class main extends javax.swing.JFrame {
         hargaSewa.setEnabled(false);
         totalBayar.setEnabled(false);
         kembalian.setEnabled(false);
+    }
+
+    public void judul() {
+        Object[] judul = {
+            "No Transaksi", "Tanggal", "No Polisi", "Jenis Kendaraan", "Supir", "Lama Sewa", "Uang Bayar"
+        };
+        tabModel = new DefaultTableModel(null, judul);
+        tabelRental.setModel(tabModel);
+    }
+
+    public void tambahData() {
+
+    }
+
+    private String where = "";
+
+    public void tampilData() {
+        try {
+            st = cn.createStatement();
+            rs = st.executeQuery("SELECT * FROM penyewaan " + where);
+
+            // Menghapus semua elemen dari tabModel sebelum mengisi dengan data baru
+            DefaultTableModel model = (DefaultTableModel) tabelRental.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                Object[] data = {
+                    rs.getString("no_transaksi"),
+                    rs.getString("tanggal"),
+                    rs.getString("no_polisi"),
+                    rs.getString("jenis_kendaraan"),
+                    rs.getString("harga_supir"),
+                    rs.getInt("lama_sewa"),
+                    rs.getInt("uang_bayar")
+                };
+
+                model.addRow(data);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void addTanggal() {
@@ -91,7 +167,7 @@ public final class main extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelRental = new javax.swing.JTable();
         pilihSupir = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -259,7 +335,7 @@ public final class main extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelRental.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -270,7 +346,7 @@ public final class main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelRental);
 
         pilihSupir.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supir", "No Supir" }));
         pilihSupir.addActionListener(new java.awt.event.ActionListener() {
@@ -494,6 +570,51 @@ public final class main extends javax.swing.JFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
+        try {
+            String sql = "INSERT INTO penyewaan (no_transaksi, tanggal, no_polisi, jenis_kendaraan, harga_supir, lama_sewa, uang_bayar) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, noTransaksi.getText());
+            pst.setString(2, tanggal.getText());
+            pst.setString(3, (String) noPolisi.getSelectedItem());
+            pst.setString(4, jenisKendaraan.getText());
+            pst.setString(5, hargaSupir.getText());
+            pst.setString(6, lamaSewa.getText());
+            pst.setString(7, uangBayar.getText());
+
+            // Eksekusi query untuk menyimpan data ke dalam database
+            pst.executeUpdate();
+
+            // Memperbarui tampilan data setelah data berhasil ditambahkan
+            tampilData();
+
+            // Menampilkan pesan bahwa data berhasil disimpan
+            JOptionPane.showMessageDialog(null, "Simpan Berhasil!");
+
+            // Memperbarui tampilan tabel dengan menambahkan data baru
+            DefaultTableModel model = (DefaultTableModel) tabelRental.getModel();
+            model.addRow(new Object[]{
+                noTransaksi.getText(),
+                tanggal.getText(),
+                (String) noPolisi.getSelectedItem(),
+                jenisKendaraan.getText(),
+                hargaSupir.getText(),
+                lamaSewa.getText(),
+                uangBayar.getText()
+            });
+
+            // Mengosongkan input setelah penyimpanan berhasil
+            noTransaksi.setText("");
+            tanggal.setText("");
+            noPolisi.setSelectedItem("");
+            jenisKendaraan.setText("");
+            hargaSupir.setText("");
+            lamaSewa.setText("");
+            uangBayar.setText("");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -656,13 +777,13 @@ public final class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jenisKendaraan;
     private javax.swing.JTextField kembalian;
     private javax.swing.JTextField lamaSewa;
     private javax.swing.JComboBox<String> noPolisi;
     private javax.swing.JTextField noTransaksi;
     private javax.swing.JComboBox<String> pilihSupir;
+    private javax.swing.JTable tabelRental;
     private javax.swing.JTextField tanggal;
     private javax.swing.JTextField totalBayar;
     private javax.swing.JTextField uangBayar;
