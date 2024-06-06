@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
  *
  * Provides a method to establish a connection to the MySQL database.
  */
+
 public class koneksi {
 
     public static Connection Koneksi() {
