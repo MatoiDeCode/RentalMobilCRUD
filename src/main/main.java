@@ -39,9 +39,7 @@ public final class main extends javax.swing.JFrame {
         conn = koneksi.Koneksi();
 
         tampilData();
-        nonAktifBtn();
-
-        noTransaksi.setText("RXX001");
+        nonAktifBtn();        
 
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
         int x = layar.width / 2 - this.getSize().width / 2;
@@ -108,7 +106,6 @@ public final class main extends javax.swing.JFrame {
     }
 
     private void resetInput() {
-        noTransaksi.setText("RXX001");
         noPolisi.setSelectedItem("");
         pilihSupir.setSelectedItem("");
         jenisKendaraan.setText("");
@@ -228,6 +225,7 @@ public final class main extends javax.swing.JFrame {
 
         jLabel3.setText("No.Polisi :");
 
+        noTransaksi.setEnabled(false);
         noTransaksi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 noTransaksiMouseExited(evt);
@@ -257,7 +255,7 @@ public final class main extends javax.swing.JFrame {
             }
         });
 
-        noPolisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "B 1234 XYZ", "D 5678 ABC", "L 9012 DEF", "F 3456 GHI", "H 7890 JKL" }));
+        noPolisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih", "B 1234 XYZ", "D 5678 ABC", "L 9012 DEF", "F 3456 GHI", "H 7890 JKL" }));
         noPolisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noPolisiActionPerformed(evt);
@@ -387,7 +385,7 @@ public final class main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelRental);
 
-        pilihSupir.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supir", "No Supir" }));
+        pilihSupir.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih", "Supir", "No Supir" }));
         pilihSupir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pilihSupirActionPerformed(evt);
@@ -592,10 +590,12 @@ public final class main extends javax.swing.JFrame {
 
     private void btnBaruActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnBaruActionPerformed
         // TODO add your handling code here:
-        noTransaksi.setText("RXX001");
+        noTransaksi.setText("");
         jenisKendaraan.setText("");
+        noPolisi.setSelectedIndex(0);
         hargaSewa.setText("");
         lamaSewa.setText("");
+        pilihSupir.setSelectedIndex(0);
         hargaSupir.setText("");
         totalBayar.setText("");
         uangBayar.setText("");
@@ -636,7 +636,7 @@ public final class main extends javax.swing.JFrame {
         String totalBayarT = totalBayar.getText();
         String kembalianT = kembalian.getText();
 
-        if (tanggalT.isEmpty() || noTransaksiT.isEmpty() || noPolisiT.isEmpty() || jenisKendaraanT.isEmpty()
+        if (tanggalT.isEmpty() || noPolisiT.isEmpty() || jenisKendaraanT.isEmpty()
                 || hargaSupirT.isEmpty() || lamaSewaT.isEmpty() || uangBayarT.isEmpty() || totalBayarT.isEmpty() || kembalianT.isEmpty() || supirT.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Semua Kolum Harus DiIsi !", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
@@ -649,18 +649,17 @@ public final class main extends javax.swing.JFrame {
         }
 
         try {
-            String sql = "INSERT INTO penyewaan (tanggal, no_transaksi, no_polisi, jenis_kendaraan, supir, harga_supir, lama_sewa, uang_bayar, total_bayar, kembalian) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO penyewaan (tanggal, no_polisi, jenis_kendaraan, supir, harga_supir, lama_sewa, uang_bayar, total_bayar, kembalian) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, tanggalT);
-            st.setString(2, noTransaksiT);
-            st.setString(3, noPolisiT);
-            st.setString(4, jenisKendaraanT);
-            st.setString(5, supirT);
-            st.setString(6, hargaSupirT);
-            st.setString(7, lamaSewaT);
-            st.setString(8, uangBayarT);
-            st.setString(9, totalBayarT);
-            st.setString(10, kembalianT);
+            st.setString(2, noPolisiT);
+            st.setString(3, jenisKendaraanT);
+            st.setString(4, supirT);
+            st.setString(5, hargaSupirT);
+            st.setString(6, lamaSewaT);
+            st.setString(7, uangBayarT);
+            st.setString(8, totalBayarT);
+            st.setString(9, kembalianT);
 
             int rowInserted = st.executeUpdate();
             if (rowInserted > 0) {

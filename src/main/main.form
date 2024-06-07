@@ -257,6 +257,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="noTransaksi">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <Events>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="noTransaksiMouseExited"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noTransaksiActionPerformed"/>
@@ -277,12 +280,13 @@
     <Component class="javax.swing.JComboBox" name="noPolisi">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="B 1234 XYZ"/>
-            <StringItem index="1" value="D 5678 ABC"/>
-            <StringItem index="2" value="L 9012 DEF"/>
-            <StringItem index="3" value="F 3456 GHI"/>
-            <StringItem index="4" value="H 7890 JKL"/>
+          <StringArray count="6">
+            <StringItem index="0" value="Pilih"/>
+            <StringItem index="1" value="B 1234 XYZ"/>
+            <StringItem index="2" value="D 5678 ABC"/>
+            <StringItem index="3" value="L 9012 DEF"/>
+            <StringItem index="4" value="F 3456 GHI"/>
+            <StringItem index="5" value="H 7890 JKL"/>
           </StringArray>
         </Property>
       </Properties>
@@ -477,9 +481,10 @@
     <Component class="javax.swing.JComboBox" name="pilihSupir">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="Supir"/>
-            <StringItem index="1" value="No Supir"/>
+          <StringArray count="3">
+            <StringItem index="0" value="Pilih"/>
+            <StringItem index="1" value="Supir"/>
+            <StringItem index="2" value="No Supir"/>
           </StringArray>
         </Property>
       </Properties>
